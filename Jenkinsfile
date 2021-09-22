@@ -3,13 +3,6 @@ pipeline {
 
    
     stages {
-        stage('Checkout') {
-            steps {
-                ansiColor('xterm') {
-                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/sem4git/spring-petclinic.git'
-                }
-            }
-        }
         stage('Build') {
             steps {
                 ansiColor('xterm') {
@@ -17,15 +10,6 @@ pipeline {
                 
                 }
             }
-
-            //post {
-            //    // If Maven was able to run the tests, even if some of the test
-             //   // failed, record the test results and archive the jar file.
-              //  success {
-            //        junit '**/target/surefire-reports/TEST-*.xml'
-             //       archiveArtifacts 'target/*.jar'
-              //  }
-            //}
         }
         //stage('Build Docker Image') {
         //    steps {
@@ -39,11 +23,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    echo '==================================Build Docker Image Start=================================='
                     app = docker.build("257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:${env.BUILD_NUMBER}")
-                    //app = docker.build("257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:333")
-                    //app.inside {
-                    //    sh 'echo $(curl localhost:8080)'
-                    //}
+                    echo '===================================Build Docker Image End==================================='
                 }
             }
         }
@@ -60,13 +42,6 @@ pipeline {
                 }
             }
         }
-        //stage('Push Docker Image') {
-        //    steps {
-        //       docker.withRegistry("https://257356753023.ecr.eu-central-1.amazonws.com", "ecr:eu-central-1:aws") {
-        //            docker.image("257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:${env.BUILD_NUMBER}").push()
-        //        }
-        //    }
-        //}
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
