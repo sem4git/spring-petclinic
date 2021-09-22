@@ -16,10 +16,10 @@ locals {
   # bucket_full_name = "${var.bucket_name}-${random_integer.bucket_prefix.result}"
   mysql_url = "jdbc:mysql://${aws_db_instance.demo_db.endpoint}/${var.db_name}?allowPublicKeyRetrieval=true&useSSL=false"
 }
-resource "random_integer" "bucket_prefix" {
-  min = 1
-  max = 9999
-}
+# resource "random_integer" "bucket_prefix" {
+#   min = 1
+#   max = 9999
+# }
 # resource "aws_s3_bucket" "app_bucket" {
 #   bucket = local.bucket_full_name
 #   acl    = "public-read"
@@ -40,33 +40,33 @@ resource "random_integer" "bucket_prefix" {
 # }
 
 #Create key-pair for logging into EC2 in us-east-1
-resource "aws_key_pair" "master-key" {
-  key_name   = "controller"
-  public_key = file("~/.ssh/id_rsa.pub")
-}
-resource "aws_ecr_repository" "pet_rep" {
-  name                 = "petclinic"
-  image_tag_mutability = "MUTABLE"
+# resource "aws_key_pair" "master-key" {
+#   key_name   = "controller"
+#   public_key = file("~/.ssh/id_rsa.pub")
+# }
+# resource "aws_ecr_repository" "pet_rep" {
+#   name                 = "petclinic"
+#   image_tag_mutability = "MUTABLE"
 
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-}
-resource "null_resource" "docker_push" {
-  # provisioner "local-exec" {
-  #   command = templatefile("docker.sh.tpl", {
-  #   region = var.region
-  #   ecr_url = aws_ecr_repository.pet_rep.repository_url
-  #   })
-  # }
-  provisioner "local-exec" {
-    command = <<EOF
-aws ecr get-login-password --region ${var.region} | docker login --username AWS --password-stdin ${aws_ecr_repository.pet_rep.repository_url}
-docker tag 6a7bba1480a1 ${aws_ecr_repository.pet_rep.repository_url}:v1
-docker push ${aws_ecr_repository.pet_rep.repository_url}:v1
-EOF
-  }
-}
+#   image_scanning_configuration {
+#     scan_on_push = true
+#   }
+# }
+# resource "null_resource" "docker_push" {
+#   # provisioner "local-exec" {
+#   #   command = templatefile("docker.sh.tpl", {
+#   #   region = var.region
+#   #   ecr_url = aws_ecr_repository.pet_rep.repository_url
+#   #   })
+#   # }
+#   provisioner "local-exec" {
+#     command = <<EOF
+# aws ecr get-login-password --region ${var.region} | docker login --username AWS --password-stdin ${aws_ecr_repository.pet_rep.repository_url}
+# docker tag 6a7bba1480a1 ${aws_ecr_repository.pet_rep.repository_url}:v1
+# docker push ${aws_ecr_repository.pet_rep.repository_url}:v1
+# EOF
+#   }
+# }
 resource "aws_iam_role" "ecsTaskExecutionRole" {
   name               = "ECSTaskExecutionRolePolicy-Demo"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
