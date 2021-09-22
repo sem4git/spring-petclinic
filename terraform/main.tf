@@ -90,7 +90,7 @@ resource "aws_ecs_task_definition" "demo_td" {
   container_definitions = jsonencode([
     {
       name      = "Pet"
-      image     = "${aws_ecr_repository.pet_rep.repository_url}:v1"
+      image     = "${data.aws_ecr_repository.pet_rep.repository_url}:latest"
       essential = true
       environment = [
         {
