@@ -13,6 +13,10 @@ data "aws_availability_zones" "available" {
   # provider = aws.region-master
   state    = "available"
 }
+
+data "aws_ecr_repository" "pet_rep" {
+  name = "petclinic"
+}
 # data "aws_availability_zones" "available_s" {
 #   provider = aws.region-slave
 #   state    = "available"

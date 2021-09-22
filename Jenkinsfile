@@ -40,11 +40,11 @@ pipeline {
             //         }
             //     }
             // }
-            stage('Deploy Infrastructure by Terraform') {
+            stage('Terraform Plan') {
                 steps {
                     ansiColor('xterm') {
                         script {
-                            echo '============================Deploy Infrastructure by Terraform Start============================'
+                            echo '============================Terraform Plan Start============================'
                             withCredentials([usernamePassword(credentialsId: 'aws', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                                 sh """
                                     # terraform remote config -backend=S3 -backend-config="bucket=david-jenkins-state" -backend-config="key=state.tfstate" -backend-config="region=eu-west-1" 
@@ -52,7 +52,7 @@ pipeline {
                                     terraform -chdir=./terraform plan 
                                 """
                             }
-                            echo '============================Deploy Infrastructure by Terraform End==============================='
+                            echo '============================Terraform Plan End==============================='
                         }
                     }
                 }
