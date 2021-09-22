@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    ansiColor('xterm') {
+    // ansiColor('xterm') {
         stages {
             stage('Build') {
                 steps {
@@ -55,7 +55,7 @@ pipeline {
                 }
             }
         }
-    }
+    // }
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
         timestamps()
