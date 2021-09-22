@@ -41,8 +41,8 @@ pipeline {
             //     }
             // }
             stage('Deploy Infrastructure by Terraform') {
-                ansiColor('xterm') {
-                    steps {
+                steps {
+                    ansiColor('xterm') {
                         script {
                             echo '============================Deploy Infrastructure by Terraform Start============================'
                             withCredentials([usernamePassword(credentialsId: 'aws', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
