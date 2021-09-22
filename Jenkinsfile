@@ -41,7 +41,7 @@ pipeline {
                 }
             }
         }
-        stage('Push Docker Image') {
+        stage('Deploy Infrastructure by Terraform') {
             steps {
                 script {
                     echo '============================Deploy Infrastructure by Terraform Start============================'
