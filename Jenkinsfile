@@ -35,10 +35,12 @@ pipeline {
             //}
             steps {
                 script {
+                    echo '==================================Push Docker Image Start=================================='
                     docker.withRegistry('https://257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic', 'aws-ecr') {
                         app.push("${env.BUILD_NUMBER}")
                         //app.push("latest")
                     }
+                    echo '===================================Push Docker Image End==================================='
                 }
             }
         }
