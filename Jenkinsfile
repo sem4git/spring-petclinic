@@ -30,9 +30,6 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-            //when {
-            //    branch 'master'
-            //}
             steps {
                 script {
                     echo '==================================Push Docker Image Start=================================='
@@ -41,6 +38,18 @@ pipeline {
                         //app.push("latest")
                     }
                     echo '===================================Push Docker Image End==================================='
+                }
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    echo '============================Deploy Infrastructure by Terraform Start============================'
+                    // docker.withRegistry('https://257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic', 'aws-ecr') {
+                    //     app.push("${env.BUILD_NUMBER}")
+                    //     //app.push("latest")
+                    // }
+                    echo '============================Deploy Infrastructure by Terraform End==============================='
                 }
             }
         }
