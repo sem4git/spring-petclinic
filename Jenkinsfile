@@ -18,18 +18,28 @@ pipeline {
             //        }
             //    }
             // }
-            stage('Push Docker Image') {
-               steps {
-                   script {
-                       echo '=======================Push Docker Image Start==============='
-                       withCredentials([usernamePassword(credentialsId: 'aws-ecr', passwordVariable: 'ECR_TOKEN', usernameVariable: 'ECR_LOGIN')]) {
-                            sh "docker login -u AWS -p $ECR_TOKEN 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic"
-                            sh "docker push 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest"
-                       }
-                       echo '=======================Push Docker Image End================='
-                   }
-               }
+            stage('Docker login') {
+                steps {
+                    echo ' ============== docker login =================='
+                    withCredentials([usernamePassword(credentialsId: 'aws-ecr', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh """
+                            docker login -u $USERNAME -p $PASSWORD 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic
+                            """
+                    }
+                }
             }
+            // stage('Push Docker Image') {
+            //    steps {
+            //        script {
+            //            echo '=======================Push Docker Image Start==============='
+            //            withCredentials([usernamePassword(credentialsId: 'aws-ecr', passwordVariable: 'ECR_TOKEN', usernameVariable: 'ECR_LOGIN')]) {
+            //                 sh "docker login -u AWS -p $ECR_TOKEN 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic"
+            //                 sh "docker push 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest"
+            //            }
+            //            echo '=======================Push Docker Image End================='
+            //        }
+            //    }
+            // }
             // stage('Build Docker Image') {
             //     steps {
             //         script {
