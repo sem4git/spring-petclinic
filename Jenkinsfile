@@ -1,23 +1,23 @@
 pipeline {
     agent any
         stages {
-            stage('Build') {
-                steps {
-                    ansiColor('xterm') {
-                        sh './mvnw package'
+            // stage('Build') {
+            //     steps {
+            //         ansiColor('xterm') {
+            //             sh './mvnw package'
 
-                    }
-                }
-            }
-            stage('Build Docker Image') {
-               steps {
-                   script {
-                       echo '=======================Build Docker Image Start==============='
-                       sh "docker build -t 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest . "
-                       echo '=======================Build Docker Image End================='
-                   }
-               }
-            }
+            //         }
+            //     }
+            // }
+            // stage('Build Docker Image') {
+            //    steps {
+            //        script {
+            //            echo '=======================Build Docker Image Start==============='
+            //            sh "docker build -t 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest . "
+            //            echo '=======================Build Docker Image End================='
+            //        }
+            //    }
+            // }
             stage('Push Docker Image') {
                steps {
                    script {
