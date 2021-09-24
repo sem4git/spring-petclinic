@@ -22,9 +22,9 @@ pipeline {
                steps {
                    script {
                        echo '=======================Build Docker Image Start==============='
-                       withCredentials([usernamePassword(credentialsId: 'aws', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
-                            sh """aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic
-                                 docker push 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest
+                       withCredentials([usernamePassword(credentialsId: 'aws-ecr', passwordVariable: 'ECR-TOKEN', usernameVariable: 'ECR-LOGIN')]) {
+                            sh """docker login --username AWS --password ${ECR-TOKEN} 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic
+                                  docker push 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest
                              """
                        }
                        echo '=======================Build Docker Image End================='
