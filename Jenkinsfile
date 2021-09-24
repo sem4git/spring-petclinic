@@ -21,12 +21,12 @@ pipeline {
             stage('Push Docker Image') {
                steps {
                    script {
-                       echo '=======================Build Docker Image Start==============='
+                       echo '=======================Push Docker Image Start==============='
                        withCredentials([usernamePassword(credentialsId: 'aws-ecr', passwordVariable: 'ECR_TOKEN', usernameVariable: 'ECR_LOGIN')]) {
                             sh "docker login --username AWS --password ${ECR_TOKEN} 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic"
                             sh "docker push 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest"
                        }
-                       echo '=======================Build Docker Image End================='
+                       echo '=======================Push Docker Image End================='
                    }
                }
             }
@@ -43,7 +43,7 @@ pipeline {
             //     steps {
             //         script {
             //             echo '==================================Push Docker Image Start=================================='
-            //             docker.withRegistry('https://257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic', 'aws-ecr') {
+            //             docker.withRegistry('https://257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic', 'aws1') {
             //                 // app.push("${env.BUILD_NUMBER}")
             //                 app.push("latest")
             //             }
