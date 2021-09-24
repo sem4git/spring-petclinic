@@ -15,7 +15,6 @@ pipeline {
                         echo '==================================Build Docker Image Start=================================='
                         // app = docker.build("257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:${env.BUILD_NUMBER}")
                         app = docker.build("257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest")
-                        sh "docker image prune -f"
                         echo '===================================Build Docker Image End==================================='
                     }
                 }
@@ -27,6 +26,7 @@ pipeline {
                         docker.withRegistry('https://257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic', 'ecr:eu-central-1:aws1') {
                             app.push("${env.BUILD_NUMBER}")
                             app.push("latest")
+                            app.rmi("latest")
                         }
                         echo '===================================Push Docker Image End==================================='
                     }
