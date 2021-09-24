@@ -53,7 +53,7 @@ pipeline {
                 steps {
                     script {
                         echo '==================================Push Docker Image Start=================================='
-                        docker.withRegistry('https://257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic', 'aws1') {
+                        docker.withRegistry('https://257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic', 'ecr:eu-central-1:aws') {
                             // app.push("${env.BUILD_NUMBER}")
                             app.push("latest")
                         }
