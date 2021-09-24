@@ -40,15 +40,16 @@ pipeline {
             //        }
             //    }
             // }
-            // stage('Build Docker Image') {
-            //     steps {
-            //         script {
-            //             echo '==================================Build Docker Image Start=================================='
-            //             app = docker.build("257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:${env.BUILD_NUMBER}")
-            //             echo '===================================Build Docker Image End==================================='
-            //         }
-            //     }
-            // }
+            stage('Build Docker Image') {
+                steps {
+                    script {
+                        echo '==================================Build Docker Image Start=================================='
+                        // app = docker.build("257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:${env.BUILD_NUMBER}")
+                        app = docker.build("257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest")
+                        echo '===================================Build Docker Image End==================================='
+                    }
+                }
+            }
             stage('Push Docker Image') {
                 steps {
                     script {
