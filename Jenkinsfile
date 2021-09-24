@@ -18,16 +18,16 @@ pipeline {
             //        }
             //    }
             // }
-            stage('Docker login') {
-                steps {
-                    echo ' ============== docker login =================='
-                    withCredentials([usernamePassword(credentialsId: 'aws-ecr', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh """
-                            docker login -u $USERNAME -p $PASSWORD 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic
-                            """
-                    }
-                }
-            }
+            // stage('Docker login') {
+            //     steps {
+            //         echo ' ============== docker login =================='
+            //         withCredentials([usernamePassword(credentialsId: 'aws-ecr', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            //             sh """
+            //                 docker login -u $USERNAME -p $PASSWORD 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic
+            //                 """
+            //         }
+            //     }
+            // }
             // stage('Push Docker Image') {
             //    steps {
             //        script {
@@ -49,18 +49,18 @@ pipeline {
             //         }
             //     }
             // }
-            // stage('Push Docker Image') {
-            //     steps {
-            //         script {
-            //             echo '==================================Push Docker Image Start=================================='
-            //             docker.withRegistry('https://257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic', 'aws1') {
-            //                 // app.push("${env.BUILD_NUMBER}")
-            //                 app.push("latest")
-            //             }
-            //             echo '===================================Push Docker Image End==================================='
-            //         }
-            //     }
-            // }
+            stage('Push Docker Image') {
+                steps {
+                    script {
+                        echo '==================================Push Docker Image Start=================================='
+                        docker.withRegistry('https://257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic', 'aws1') {
+                            // app.push("${env.BUILD_NUMBER}")
+                            app.push("latest")
+                        }
+                        echo '===================================Push Docker Image End==================================='
+                    }
+                }
+            }
         }
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
