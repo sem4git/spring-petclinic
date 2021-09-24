@@ -27,6 +27,7 @@ pipeline {
                                  docker login --username AWS --password-stdin 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic
                                  docker push 257356753023.dkr.ecr.eu-central-1.amazonaws.com/petclinic:latest
                              """
+                       }
                        echo '=======================Build Docker Image End================='
                    }
                }
