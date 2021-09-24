@@ -1,14 +1,14 @@
 pipeline {
     agent any
         stages {
-            // stage('Build') {
-            //     steps {
-            //         ansiColor('xterm') {
-            //             sh './mvnw package'
+            stage('Build') {
+                steps {
+                    ansiColor('xterm') {
+                        sh './mvnw package'
 
-            //         }
-            //     }
-            // }
+                    }
+                }
+            }
             stage('Build Docker Image') {
                 steps {
                     script {
